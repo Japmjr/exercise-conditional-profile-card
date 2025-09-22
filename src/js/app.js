@@ -22,7 +22,7 @@ import "../style/index.css";
         city: null
     }
  */
-function render(variables = {}) {
+/*function render(variables = {}) {
   console.log("These are the current variables: ", variables); // print on the console
   // here we ask the logical questions to make decisions on how to build the html
   // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
@@ -44,6 +44,82 @@ function render(variables = {}) {
           </ul>
         </div>
     `;
+}*/
+function render(variables) {
+  console.log("These are the current variables: ", variables);
+
+  let cover;
+  if (variables.includeCover === false) {
+    cover = "<div class='cover'></div>";
+  } else {
+    cover =
+      '<div class="cover"><img src="' + variables.background + '" /></div>';
+  }
+
+  let fullName = "";
+  if (variables.name) {
+    fullName = variables.name;
+  }
+  if (variables.lastName) {
+    if (fullName !== "") fullName += " ";
+    fullName += variables.lastName;
+  }
+  if (fullName === "") fullName = "Name not defined";
+
+  let role = "Role not defined";
+  if (variables.role) role = variables.role;
+
+  let location = "";
+  if (variables.city) location = variables.city;
+  if (variables.country) {
+    if (location !== "") location += ", ";
+    location += variables.country;
+  }
+  if (location === "") location = "Location not defined";
+
+  let socialHTML = "";
+  if (variables.twitter)
+    socialHTML +=
+      '<li><a href="https://twitter.com/' +
+      variables.twitter +
+      '"><i class="fab fa-twitter"></i></a></li>';
+  if (variables.github)
+    socialHTML +=
+      '<li><a href="https://github.com/' +
+      variables.github +
+      '"><i class="fab fa-github"></i></a></li>';
+  if (variables.linkedin)
+    socialHTML +=
+      '<li><a href="https://linkedin.com/in/' +
+      variables.linkedin +
+      '"><i class="fab fa-linkedin"></i></a></li>';
+  if (variables.instagram)
+    socialHTML +=
+      '<li><a href="https://instagram.com/' +
+      variables.instagram +
+      '"><i class="fab fa-instagram"></i></a></li>';
+
+  document.querySelector("#widget_content").innerHTML =
+    '<div class="widget">' +
+    cover +
+    '<img src="' +
+    variables.avatarURL +
+    '" class="photo" />' +
+    "<h1>" +
+    fullName +
+    "</h1>" +
+    "<h2>" +
+    role +
+    "</h2>" +
+    "<h3>" +
+    location +
+    "</h3>" +
+    '<ul class="position-' +
+    variables.socialMediaPosition +
+    '">' +
+    socialHTML +
+    "</ul>" +
+    "</div>";
 }
 
 /**
